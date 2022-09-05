@@ -1,6 +1,8 @@
 import { ThumbDownAltOutlined, ThumbUpOutlined } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
+import Card from "../components/Card";
+import Comments from "../components/Comments";
 
 export const Container = styled.div`
   display: flex;
@@ -64,7 +66,6 @@ export const ChannelInfo = styled.div`
 `;
 
 export const Image = styled.img`
-  /*  */
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -110,8 +111,8 @@ const Video = () => {
           <iframe
             width="100%"
             height="520"
-            src="https://www.youtube.com/embed/4bmUFRxNEIg"
-            title="Luis Fonsi - Despacito ( cover by J.Fla )"
+            src="https://www.youtube.com/embed/2bHBUs-k3ac"
+            title="Luis Fonsi Despacito ft. Daddy Yankee (audio)"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -139,7 +140,7 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://freshpet.com/wp-content/uploads/2019/09/cat-2068462_1280.jpg" />
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/P_mathematics.svg/2276px-P_mathematics.svg.png" />
             <ChannelDetail>
               <ChannelName>Cat Dev</ChannelName>
               <ChannelCounter>120M subscribers</ChannelCounter>
@@ -153,8 +154,19 @@ const Video = () => {
           </ChannelInfo>
           <Subscribe>SUBSCRIBE</Subscribe>
         </Channel>
+        <Hr />
+        <Comments />
       </Content>
-      <Recommendation>recommendation</Recommendation>
+      <Recommendation>
+        <Card type="sm" />
+        <Card type="sm" />
+        <Card type="sm" />
+        <Card type="sm" />
+        <Card type="sm" />
+        <Card type="sm" />
+        <Card type="sm" />
+        <Card type="sm" />
+      </Recommendation>
     </Container>
   );
 };
