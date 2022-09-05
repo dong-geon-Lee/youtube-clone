@@ -20,7 +20,7 @@ import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightne
 
 export const Container = styled.div`
   flex: 1;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({ theme }) => theme.bgLighter};
   height: 100vh;
   color: ${({ theme }) => theme.text};
   font-size: 1.4rem;
@@ -53,8 +53,8 @@ export const Item = styled.div`
 `;
 
 const Hr = styled.hr`
-  margin: 15px 0px;
-  border: 0.5px solid ${({ theme }) => theme.soft};
+  margin: 1.5rem 0;
+  border: 0.05rem solid ${({ theme }) => theme.soft};
 `;
 
 export const Login = styled.div``;
