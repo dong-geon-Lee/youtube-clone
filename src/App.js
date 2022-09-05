@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
 `;
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -39,6 +39,10 @@ const App = () => {
                     <Route path=":id" element={<Video />} />
                   </Route>
                 </Route>
+                {/* <Route path="/" element={<Home />} />
+                <Route path="video">
+                  <Route path=":id" element={<Video />} />
+                </Route> */}
               </Routes>
             </Wrapper>
           </Main>
