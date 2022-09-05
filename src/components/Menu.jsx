@@ -51,6 +51,10 @@ export const Item = styled.div`
   gap: 2rem;
   cursor: pointer;
   padding: 0.75rem 0;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.soft};
+  }
 `;
 
 const Hr = styled.hr`
@@ -117,10 +121,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
 
         <Login>
           Sign in to like videos, comment, and subscribe.
-          <Button>
-            <AccountCircleOutlinedIcon />
-            SIGN IN
-          </Button>
+          <Link to="signin" style={{ textDecoration: "none" }}>
+            <Button>
+              <AccountCircleOutlinedIcon />
+              SIGN IN
+            </Button>
+          </Link>
         </Login>
         <Hr />
 
