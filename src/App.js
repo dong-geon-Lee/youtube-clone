@@ -43,10 +43,6 @@ const App = () => {
                     <Route path=":id" element={<Video />} />
                   </Route>
                 </Route>
-                {/* <Route path="/" element={<Home />} />
-                <Route path="video">
-                  <Route path=":id" element={<Video />} />
-                </Route> */}
               </Routes>
             </Wrapper>
           </Main>

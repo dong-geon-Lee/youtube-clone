@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -36,20 +37,25 @@ export const Text = styled.span`
   font-size: 1.4rem;
 `;
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+  const [channel, setChannel] = useState({});
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      const response = await axios.get(`/users/find/${comment.userId}`);
+      setChannel(response.data);
+    };
+    fetchComment();
+  }, [comment.userId]);
+
   return (
     <Container>
-      <Avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/P_mathematics.svg/2276px-P_mathematics.svg.png" />
+      <Avatar src={channel.img} />
       <Details>
         <Name>
-          Cat Dev <Date>1 day ago</Date>
+          {channel.name} <Date>1 day ago</Date>
         </Name>
-        <Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quos
-          laboriosam ullam quibusdam, adipisci tempora. Incidunt, omnis alias
-          reprehenderit quo illum fuga at quibusdam nemo tempora quisquam
-          eligendi, culpa fugiat!
-        </Text>
+        <Text>{comment.desc}</Text>
       </Details>
     </Container>
   );

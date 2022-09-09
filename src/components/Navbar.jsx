@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -71,6 +71,7 @@ export const Avatar = styled.img`
 
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const [open, setOpen] = useState(false);
 
   console.log(currentUser);
 
@@ -84,7 +85,7 @@ const Navbar = () => {
 
         {currentUser ? (
           <User>
-            <VideoCallOutlined />
+            <VideoCallOutlined onClick={() => setOpen(true)} />
             <Avatar src={currentUser.img} />
             {currentUser.name}
           </User>

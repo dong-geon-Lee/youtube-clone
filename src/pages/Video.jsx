@@ -1,8 +1,19 @@
-import { ThumbDownAltOutlined, ThumbUpOutlined } from "@mui/icons-material";
-import React from "react";
+import {
+  ThumbDown,
+  ThumbDownAltOutlined,
+  ThumbDownOffAltOutlined,
+  ThumbUp,
+  ThumbUpOutlined,
+} from "@mui/icons-material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Card from "../components/Card";
+import { format } from "timeago.js";
 import Comments from "../components/Comments";
+import { subscription } from "../redux/userSlice";
+import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 
 export const Container = styled.div`
   display: flex;
@@ -103,31 +114,86 @@ export const Subscribe = styled.button`
   cursor: pointer;
 `;
 
+export const VideoFrame = styled.video`
+  max-height: 520px;
+  width: 100%;
+  object-fit: cover;
+`;
+
 const Video = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const { currentVideo } = useSelector((state) => state.video);
+
+  const dispatch = useDispatch();
+
+  const path = useLocation().pathname.split("/")[2];
+
+  console.log(path);
+
+  const [channel, setChannel] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const videoRes = await axios.get(`/videos/find/${path}`);
+        const channelRes = await axios.get(
+          `/users/find/${videoRes.data.userId}`
+        );
+        setChannel(channelRes.data);
+        dispatch(fetchSuccess(videoRes.data));
+      } catch (err) {}
+    };
+    fetchData();
+  }, [path, dispatch]);
+
+  console.log(currentVideo);
+
+  const handleLike = async () => {
+    await axios.put(`/users/like/${currentVideo._id}`);
+    dispatch(like(currentUser._id));
+  };
+
+  const handleDisLike = async () => {
+    await axios.put(`/users/dislike/${currentVideo._id}`);
+    dispatch(dislike(currentUser._id));
+  };
+
+  const handleSub = async () => {
+    currentUser.subscribedUsers.includes(channel._id)
+      ? await axios.put(`/users/unsub/${channel._id}`)
+      : await axios.put(`/users/sub/${channel._id}`);
+
+    dispatch(subscription(channel._id));
+  };
+
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <iframe
-            width="100%"
-            height="520"
-            src="https://www.youtube.com/embed/2bHBUs-k3ac"
-            title="Luis Fonsi Despacito ft. Daddy Yankee (audio)"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <VideoFrame src={currentVideo.videoUrl} />
         </VideoWrapper>
 
-        <Title>Test Video</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
-          <Info>7,948,154 views º Jun 22, 2022</Info>
+          <Info>
+            {currentVideo?.views} views º {format(currentVideo?.createdAt)}
+          </Info>
           <Buttons>
-            <Button>
-              <ThumbUpOutlined /> 123
+            <Button onClick={handleLike}>
+              {currentVideo?.likes?.includes(currentUser._id) ? (
+                <ThumbUp />
+              ) : (
+                <ThumbUpOutlined />
+              )}
+              {currentVideo?.likes.length}
             </Button>
-            <Button>
-              <ThumbDownAltOutlined /> Dislike
+            <Button onClick={handleDisLike}>
+              {currentVideo?.dislike?.includes(currentUser._id) ? (
+                <ThumbDown />
+              ) : (
+                <ThumbDownOffAltOutlined />
+              )}
+              Dislike
             </Button>
             <Button>
               <ThumbDownAltOutlined /> Share
@@ -140,33 +206,24 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/P_mathematics.svg/2276px-P_mathematics.svg.png" />
+            <Image src={channel?.img} />
             <ChannelDetail>
-              <ChannelName>Cat Dev</ChannelName>
-              <ChannelCounter>120M subscribers</ChannelCounter>
-              <Description>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. A
-                cumque nisi ea ex ut delectus vitae at, ad laboriosam quis,
-                consequuntur laborum quas! Perspiciatis obcaecati deserunt
-                incidunt nihil veniam optio?
-              </Description>
+              <ChannelName>{channel?.name}</ChannelName>
+              <ChannelCounter>
+                {channel?.subscribers} subscribers
+              </ChannelCounter>
+              <Description>{currentVideo?.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
+          <Subscribe onClick={handleSub}>
+            {currentUser.subscribedUsers?.includes(channel._id)
+              ? "SUBSCRIBED"
+              : "SUBSCRIBE"}
+          </Subscribe>
         </Channel>
         <Hr />
-        <Comments />
+        <Comments videoId={currentVideo._id} />
       </Content>
-      <Recommendation>
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-      </Recommendation>
     </Container>
   );
 };

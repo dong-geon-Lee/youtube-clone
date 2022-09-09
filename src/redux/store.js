@@ -21,6 +21,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({ user: userReducer, video: videoReducer });
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
