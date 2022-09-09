@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Menu from "./components/Menu";
 import styled, { ThemeProvider } from "styled-components";
-import Navbar from "./components/Navbar";
+import Navbar, { Search } from "./components/Navbar";
 import { darkTheme, lightTheme } from "./utils/Theme";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -38,6 +38,7 @@ const App = () => {
                   <Route index element={<Home type="random" />} />
                   <Route path="trends" element={<Home type="trend" />} />
                   <Route path="subscriptions" element={<Home type="sub" />} />
+                  <Route path="search" element={<Search />} />
                   <Route path="signin" element={<SignIn></SignIn>} />
                   <Route path="video">
                     <Route path=":id" element={<Video />} />

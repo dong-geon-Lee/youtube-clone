@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import Comments from "../components/Comments";
+import Recommendation from "../components/Recommendation";
 import { subscription } from "../redux/userSlice";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 
@@ -60,10 +61,6 @@ export const Button = styled.div`
 export const Hr = styled.hr`
   margin: 1.5rem 0;
   border: 0.05rem solid ${({ theme }) => theme.soft};
-`;
-
-export const Recommendation = styled.div`
-  flex: 2;
 `;
 
 export const Channel = styled.div`
@@ -170,7 +167,7 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl} />
+          <VideoFrame src={currentVideo.videoUrl} controls />
         </VideoWrapper>
 
         <Title>{currentVideo?.title}</Title>
@@ -224,6 +221,7 @@ const Video = () => {
         <Hr />
         <Comments videoId={currentVideo._id} />
       </Content>
+      <Recommendation tags={currentVideo.tags} />
     </Container>
   );
 };

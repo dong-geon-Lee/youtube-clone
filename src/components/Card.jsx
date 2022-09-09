@@ -4,52 +4,52 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { format } from "timeago.js";
 
-export const Container = styled.div`
+const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
-  margin-bottom: ${(props) => (props.type === "sm" ? "1rem" : "4.5rem")};
+  margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "45px")};
   cursor: pointer;
   display: ${(props) => props.type === "sm" && "flex"};
-  gap: 1rem;
+  gap: 10px;
 `;
 
-export const Image = styled.img`
+const Image = styled.img`
   width: 100%;
-  height: ${(props) => (props.type === "sm" ? "12rem" : "20.2rem")};
+  height: ${(props) => (props.type === "sm" ? "120px" : "202px")};
   background-color: #999;
   flex: 1;
 `;
 
-export const Details = styled.div`
+const Details = styled.div`
   display: flex;
-  margin-top: ${(props) => props.type !== "sm" && "1.6rem"};
-  gap: 1.2rem;
+  margin-top: ${(props) => props.type !== "sm" && "16px"};
+  gap: 12px;
   flex: 1;
 `;
 
-export const ChannelImage = styled.img`
-  width: 3.6rem;
-  height: 3.6rem;
+const ChannelImage = styled.img`
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-color: #999;
   display: ${(props) => props.type === "sm" && "none"};
 `;
 
-export const Texts = styled.div``;
+const Texts = styled.div``;
 
-export const Title = styled.h1`
-  font-size: 1.6rem;
+const Title = styled.h1`
+  font-size: 16px;
   font-weight: 500;
   color: ${({ theme }) => theme.text};
 `;
 
-export const ChannelName = styled.h2`
-  font-size: 1.4rem;
+const ChannelName = styled.h2`
+  font-size: 14px;
   color: ${({ theme }) => theme.textSoft};
-  margin: 0.9rem 0;
+  margin: 9px 0px;
 `;
 
-export const Info = styled.div`
-  font-size: 1.4rem;
+const Info = styled.div`
+  font-size: 14px;
   color: ${({ theme }) => theme.textSoft};
 `;
 
@@ -65,16 +65,11 @@ const Card = ({ type, video }) => {
   }, [video.userId]);
 
   return (
-    <Link
-      to={`/video/${video._id}`}
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link to={`/video/${video._id}`} style={{ textDecoration: "none" }}>
       <Container type={type}>
         <Image type={type} src={video.imgUrl} />
-
         <Details type={type}>
           <ChannelImage type={type} src={channel.img} />
-
           <Texts>
             <Title>{video.title}</Title>
             <ChannelName>{channel.name}</ChannelName>
