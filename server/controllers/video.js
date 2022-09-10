@@ -123,9 +123,8 @@ export const search = async (req, res, next) => {
     const videos = await Video.find({
       title: { $regex: query, $options: "i" },
     }).limit(40);
-
     res.status(200).json(videos);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
